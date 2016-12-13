@@ -55,8 +55,22 @@ public class BinaryTree {
      * 二叉搜索树：若它的左子树不空，则左子树上所有结点的值均小于它的根结点的值；
      * 若它的右子树不空，则右子树上所有结点的值均大于它的根结点的值；
      * 它的左、右子树也分别为二叉排序树。
+     * KEY:最后一个值为根节点，去掉根节点剩下的序列为T，还剩两个子树；
+     * 序列T最后一个值变为右子树的根节点，这个节点比在他同级的左树和自己的左子树的所有节点都大；
+     * 比自己右子树的所有节点都小。（这就是可以递归的地方）;
+     * 把所有树按照上面的方式递归，
      */
     public static boolean verifySquenceOfBST(int [] sequence) {
+        int len = sequence.length;
+        if(len == 0)    return false;
+        int i = 0;
+        while(--len > 0){
+            while(sequence[i] < sequence[len])  i++;//左树及左子树
+            while(sequence[i] > sequence[len])  i++;//右子树
+            if(len>i)   return false;
+            i=0;
+        }
+
         return true;
     }
 }
