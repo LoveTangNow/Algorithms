@@ -12,7 +12,7 @@ public class BinaryTree {
      * 从上往下打印出二叉树的每个节点，同层节点从左至右打印
      * KEY: 借助一个队列
      */
-    public ArrayList<Integer> printFromTopToBottom(TreeNode root) {
+    public static ArrayList<Integer> printFromTopToBottom(TreeNode root) {
 
         ArrayList<Integer> vals = new ArrayList<>();
         if(root == null)    return vals;
@@ -47,6 +47,50 @@ public class BinaryTree {
         dep1 = getTreeDepth(root.left);
         dep2 = getTreeDepth(root.right);
         return dep1 >= dep2 ? dep1+1 : dep2 + 1;
+    }
+
+
+    /**
+     *输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。
+     * 假设输入的前序遍历和中序遍历的结果中都不含重复的数字
+     * 例如输入前序遍历序列{1,2,4,7,3,5,6,8}和中序遍历序列{4,7,2,1,5,3,8,6}，
+     * 则重建二叉树并返回
+     */
+    public static TreeNode reConstructBinaryTree(int [] pre,int [] in) {
+
+        int len = pre.length;
+        if(len == 0) return null;
+
+
+        TreeNode root = new TreeNode(pre[0]);//先序遍历的第一个为根节点
+        //查找中序遍历中根节点的位置，以此划分左右子树
+        int index = 0;
+        for(int i=0; i<len; i++){
+            if(in[i]==pre[0]) {
+                index = i;
+                break;
+            }
+        }
+
+        int[] leftPre = new int[index],leftIn = new int[index];
+        int[] rightPre = new int[len-index -1],rightIn = new int[len-index -1];
+        //构造出左子树的先序遍历和中序遍历
+        for(int i=0; i<len; i++){
+            if(i<index){
+                leftPre[i] = pre[i+1];
+                leftIn[i] = in[i];
+            }else if(i>index){
+                rightPre[i-index-1] = pre[i];
+                rightIn[i-index-1] = in[i];
+            }
+
+
+        }
+
+        root.left = reConstructBinaryTree(leftPre,leftIn);
+        root.right = reConstructBinaryTree(rightPre,rightIn);
+
+        return root;
     }
 
     /**
