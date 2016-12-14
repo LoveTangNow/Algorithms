@@ -73,7 +73,28 @@ public class MathApp {
     }
 
 
+    /**
+     * 我们可以用2*1的小矩形横着或者竖着去覆盖更大的矩形。
+     * 请问用n个2*1的小矩形无重叠地覆盖一个2*n的大矩形，总共有多少种方法？
+     * Key:依然是斐波那契数列。
+     * 当n=1, 1种方法
+     * 当n=2, 2种方法
+     * 当n>=3, 第一块横着放，则还剩n-1个位置,有f(n-1)中方法
+     * 当第一块竖着放时，还剩n-2个位置，有f(n-2)种方法
+     */
+    public static int rectCover(int target) {
+        if(target==1)    return 1;
+        else if(target == 2) return 2;
+        int fn_2 =1, fn_1 = 2,m=0;
+        int i=3;
+        while(i++<=target){
+            m = fn_1 + fn_2;
+            fn_2 = fn_1;
+            fn_1 = m;
+        }
+        return m;
+    }
     public static void main(String[] args){
-
+        System.out.println(rectCover(4)) ;
     }
 }

@@ -1,5 +1,10 @@
 package wha.stack;
 
+import edu.princeton.cs.algs4.In;
+import org.junit.Test;
+
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Stack;
 
 /**
@@ -25,11 +30,55 @@ public class StackApp {
         return stack.empty();
     }
 
-    public static void main(String[] args){
+    /**
+     *输入一个整数，输出该数二进制表示中1的个数。其中负数用补码表示
+     * 运行超时
+     */
+    public static int numberOf1_my(int n) {
+        if(n==0) return 0;
+        int count = 0;
+        if(n>0){
+            while(n!=0){
+                if(n%2 == 1)    count++;
+                n /=2;
+            }
+        }else{
+            n = -n;
+            while(n%2 != 1){
+                n /= 2;
+            }
+            count++;n /= 2;
+            while (n!=0){
+                if(((n%2) ^ 1) ==1)  count++;
+                n /= 2;
+            }
+            count++;
+        }
+
+        return count;
+    }
+
+    public static int numberOf1(int n) {
+        int count = 0;
+        while(n!=0){
+            count++;
+            n = (n-1)& n;
+        }
+        return count;
+    }
+
+    @Test
+    public void isPopOrderTest(){
         int[] push = {1,2,3,4,5};
         int[] pop1 = {4,5,3,2,1};
         int[] pop2 = {4,5,3,1,2};
         boolean b = IsPopOrder(push, pop2);
         System.out.println(b);
     }
+
+    @Test
+    public void numberOf1Test() {
+        System.out.println(numberOf1(-17));
+    }
+
 }
