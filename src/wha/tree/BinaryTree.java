@@ -1,5 +1,7 @@
 package wha.tree;
 
+
+
 import java.util.*;
 
 /**
@@ -15,17 +17,17 @@ public class BinaryTree {
     public static ArrayList<Integer> printFromTopToBottom(TreeNode root) {
 
         ArrayList<Integer> vals = new ArrayList<>();
-        if(root == null)    return vals;
+        if (root == null) return vals;
         Queue<TreeNode> queue = new LinkedList<TreeNode>();
         queue.offer(root);
 
-        while(!queue.isEmpty()){//队列不为空，取出队列的首元素，把左右子树加入队列中
+        while (!queue.isEmpty()) {//队列不为空，取出队列的首元素，把左右子树加入队列中
             TreeNode treeNode = queue.poll();
-            if(treeNode.left != null){
+            if (treeNode.left != null) {
                 queue.offer(treeNode.left);
             }
 
-            if(treeNode.right != null){
+            if (treeNode.right != null) {
                 queue.offer(treeNode.right);
             }
 
@@ -36,59 +38,59 @@ public class BinaryTree {
     }
 
     /**
-     *获取二叉树的深度
+     * 获取二叉树的深度
      * KEY: 递归
      */
-    public static int getTreeDepth(TreeNode root){
-        int dep1,dep2;
-        if(root == null){
+    public static int getTreeDepth(TreeNode root) {
+        int dep1, dep2;
+        if (root == null) {
             return 0;
         }
         dep1 = getTreeDepth(root.left);
         dep2 = getTreeDepth(root.right);
-        return dep1 >= dep2 ? dep1+1 : dep2 + 1;
+        return dep1 >= dep2 ? dep1 + 1 : dep2 + 1;
     }
 
 
     /**
-     *输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。
+     * 输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。
      * 假设输入的前序遍历和中序遍历的结果中都不含重复的数字
      * 例如输入前序遍历序列{1,2,4,7,3,5,6,8}和中序遍历序列{4,7,2,1,5,3,8,6}，
      * 则重建二叉树并返回
      */
-    public static TreeNode reConstructBinaryTree(int [] pre,int [] in) {
+    public static TreeNode reConstructBinaryTree(int[] pre, int[] in) {
 
         int len = pre.length;
-        if(len == 0) return null;
+        if (len == 0) return null;
 
 
         TreeNode root = new TreeNode(pre[0]);//先序遍历的第一个为根节点
         //查找中序遍历中根节点的位置，以此划分左右子树
         int index = 0;
-        for(int i=0; i<len; i++){
-            if(in[i]==pre[0]) {
+        for (int i = 0; i < len; i++) {
+            if (in[i] == pre[0]) {
                 index = i;
                 break;
             }
         }
 
-        int[] leftPre = new int[index],leftIn = new int[index];
-        int[] rightPre = new int[len-index -1],rightIn = new int[len-index -1];
+        int[] leftPre = new int[index], leftIn = new int[index];
+        int[] rightPre = new int[len - index - 1], rightIn = new int[len - index - 1];
         //构造出左子树的先序遍历和中序遍历
-        for(int i=0; i<len; i++){
-            if(i<index){
-                leftPre[i] = pre[i+1];
+        for (int i = 0; i < len; i++) {
+            if (i < index) {
+                leftPre[i] = pre[i + 1];
                 leftIn[i] = in[i];
-            }else if(i>index){
-                rightPre[i-index-1] = pre[i];
-                rightIn[i-index-1] = in[i];
+            } else if (i > index) {
+                rightPre[i - index - 1] = pre[i];
+                rightIn[i - index - 1] = in[i];
             }
 
 
         }
 
-        root.left = reConstructBinaryTree(leftPre,leftIn);
-        root.right = reConstructBinaryTree(rightPre,rightIn);
+        root.left = reConstructBinaryTree(leftPre, leftIn);
+        root.right = reConstructBinaryTree(rightPre, rightIn);
 
         return root;
     }
@@ -104,15 +106,15 @@ public class BinaryTree {
      * 比自己右子树的所有节点都小。（这就是可以递归的地方）;
      * 把所有树按照上面的方式递归，
      */
-    public static boolean verifySquenceOfBST(int [] sequence) {
+    public static boolean verifySquenceOfBST(int[] sequence) {
         int len = sequence.length;
-        if(len == 0)    return false;
+        if (len == 0) return false;
         int i = 0;
-        while(--len > 0){
-            while(sequence[i] < sequence[len])  i++;//左树及左子树
-            while(sequence[i] > sequence[len])  i++;//右子树
-            if(len>i)   return false;
-            i=0;
+        while (--len > 0) {
+            while (sequence[i] < sequence[len]) i++;//左树及左子树
+            while (sequence[i] > sequence[len]) i++;//右子树
+            if (len > i) return false;
+            i = 0;
         }
 
         return true;
@@ -121,17 +123,38 @@ public class BinaryTree {
     /**
      * 输入两棵二叉树A，B，判断B是不是A的子结构。（ps：我们约定空树不是任意一个树的子结构）
      */
-    public static boolean HasSubtree(TreeNode root1,TreeNode root2) {
-        if(root1 == null || root2 == null)  return false;
-        return isSubtree(root1,root2) || HasSubtree(root1.left, root2) ||HasSubtree(root1.right, root2);
+    public static boolean HasSubtree(TreeNode root1, TreeNode root2) {
+        if (root1 == null || root2 == null) return false;
+        return isSubtree(root1, root2) || HasSubtree(root1.left, root2) || HasSubtree(root1.right, root2);
     }
 
-    public static boolean isSubtree(TreeNode root1,TreeNode root2) {
-        if( root2 == null)  return true;
-        if(root1 == null) return false;
+    public static boolean isSubtree(TreeNode root1, TreeNode root2) {
+        if (root2 == null) return true;
+        if (root1 == null) return false;
 
-        if(root1.val == root2.val){
-            return  isSubtree(root1.left, root2.left) && isSubtree(root2.right, root2.right);
-        }else return false;
+        if (root1.val == root2.val) {
+            return isSubtree(root1.left, root2.left) && isSubtree(root2.right, root2.right);
+        } else return false;
+    }
+
+
+    /**
+     * 输入一颗二叉树和一个整数，打印出二叉树中结点值的和为输入整数的所有路径。
+     * 路径定义为从树的根结点开始往下一直到叶结点所经过的结点形成一条路径
+     */
+
+    ArrayList<ArrayList<Integer>> list = new ArrayList<ArrayList<Integer>>();
+    ArrayList<Integer> li = new ArrayList<Integer>();
+    public ArrayList<ArrayList<Integer>> findPath(TreeNode root, int target) {
+        if(root == null)    return list;
+        li.add(root.val);
+        target -= root.val;//每经过一层的节点，减去节点的值，到达叶子节点时，看是不是减为0；
+        if(target == 0 && root.left == null && root.right == null){
+            list.add(new ArrayList<>(li));
+        }
+        findPath(root.left, target);
+        findPath(root.right, target);
+        li.remove(li.size() -1);// 每探索完一个节点,都在路径列表li中移除，不干扰下条路径的形成
+        return list;
     }
 }
