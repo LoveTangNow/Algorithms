@@ -14,7 +14,7 @@ public class LiskedListApp {
      * 输入一个链表，输出该链表中倒数第k个结点。
      */
     public ListNode FindKthToTail(ListNode head, int k) {
-        if (head = null || k < 1) return null;
+        if (head == null || k < 1) return null;
 
         List<ListNode> list = new ArrayList<ListNode>();
         while (head.next != null) {

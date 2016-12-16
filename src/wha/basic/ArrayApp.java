@@ -4,6 +4,7 @@ import edu.princeton.cs.algs4.In;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -54,6 +55,61 @@ public class ArrayApp {
 
         return array;
     }
+
+    /**
+     * 输入一个矩阵，按照从外向里以顺时针的顺序依次打印出每一个数字
+     */
+    public ArrayList<Integer> printMatrix(int [][] matrix) {
+        if(matrix== null)   return null;
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        int row = matrix.length;
+        int col = matrix[0].length;
+        int i=0, left = 0,right=col -1,top=0,bottom=row -1;
+        while(left <= right && top <= bottom){
+            for(i = left;i<=right;i++){//上 左至右
+                list.add(matrix[top][i]);
+            }
+
+            for (i=top + 1; i<= bottom ;i++){//右 上至下
+                list.add(matrix[i][right]);
+            }
+            if(top!=bottom)
+                for(i=right-1; i>=left;i--){
+                    list.add(matrix[bottom][i]);
+                }
+            if(left != right){
+                for(i=bottom -1; i>top; i--){
+                    list.add(matrix[i][left]);
+                }
+            }
+            left++; top++; right--; bottom--;
+        }
+
+        return list;
+    }
+
+
+
+
+
+    @Test
+    public void printMatrix(){
+        int[][] m = {
+                {1,2,3,4,5},
+                {6,7,8,9,10},
+                {11,12,13,14,15},
+                {16,17,18,19,20},
+                {21,22,23,24,25}
+        };
+        int[][] m1 = {{1,2,3,4,5}};
+        int[][] m2 = {
+                {1},{2},{3},{4},{5}
+        };
+        for(Integer i: printMatrix(m2)){
+            System.out.print(i + ",");
+        }
+    }
+
 
     @Test
     public void reOrderArrayTest(){
