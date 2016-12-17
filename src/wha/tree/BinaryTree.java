@@ -157,4 +157,42 @@ public class BinaryTree {
         li.remove(li.size() -1);// 每探索完一个节点,都在路径列表li中移除，不干扰下条路径的形成
         return list;
     }
+
+
+    /**
+     * 输入一棵二叉搜索树，将该二叉搜索树转换成一个排序的双向链表。
+     * 要求不能创建任何新的结点，只能调整树中结点指针的指向。
+     * KEY: 中序遍历 非递归
+     */
+    public TreeNode Convert(TreeNode root) {
+        if(root == null)     return null;
+        TreeNode curr = root;
+        TreeNode pre = null;
+        boolean isFirst = true;
+        Stack<TreeNode> stack = new Stack<>();//存储中序遍历的节点
+
+        while (curr != null || !stack.isEmpty()){
+            while (curr != null){
+                stack.push(curr);
+                curr = curr.left;
+            }
+
+            curr = stack.pop();
+            if(isFirst){//设置首节点
+                root = curr;
+                pre = root;
+                isFirst = false;
+            }else {
+                pre.right = curr;
+                curr.left =pre;
+                pre = curr;
+            }
+
+            curr = curr.right;
+        }
+
+        return root;
+    }
+
+
 }

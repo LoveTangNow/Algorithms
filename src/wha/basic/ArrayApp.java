@@ -88,9 +88,34 @@ public class ArrayApp {
         return list;
     }
 
+    /**
+     * 打印一个集合的所有子集
+     * key：长度为n的集合的子集数为2^n，
+     * 每一个元素都对应着选与不选两个选择，那么就用0~2^n的二进制数作为元素的选择。
+     */
 
+    public static void printSubCollections(String[] arr){
 
+        if(arr== null || arr.length ==0) return;
+        int len = arr.length;
+        for(int i=0; i<(1<<len); i++){
+            String setBin = Integer.toBinaryString(i);
+            int un = len - setBin.length();
+            System.out.print("{");
+            for(int j=0;j<setBin.length(); j++){
+                if(setBin.charAt(j)== '1'){
+                    System.out.print(arr[un+j]);//例如{a,b,c},c对应001，bc对应11
+                }
+            }
+            System.out.println("}");
+        }
+    }
 
+    @Test
+    public void printSubCollectionsTest(){
+        String[] s = {"a","b","c","d"};
+        printSubCollections(s);
+    }
 
     @Test
     public void printMatrix(){
