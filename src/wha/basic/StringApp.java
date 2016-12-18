@@ -1,5 +1,7 @@
 package wha.basic;
 
+import java.util.ArrayList;
+
 /**
  * Created by wwha on 16-12-13.
  */
@@ -36,10 +38,43 @@ public class StringApp {
         return array[0];
     }
 
+    /**
+     *输入一个字符串,按字典序打印出该字符串中字符(可能会有重复)的所有排列。
+     * 例如输入字符串abc,则打印出由字符a,b,c所能排列出来的所有字符串abc,acb,bac,bca,cab和cba。
+     */
+
+    public ArrayList<String> Permutation(String str) {
+        if(str == null) return null;
+        int len = str.length();
+        ArrayList<String> arr = new ArrayList<>();
+        int i=0;
+        while(i<len){
+            char fir = str.charAt(i);
+            String restStr = str.substring(0,i) + str.substring(i+1);
+
+        }
+
+        return arr;
+
+    }
+
+
+
+    private static int recursion(int i){ //递归方法主体
+        if(i<0)                          //<0退出
+            return -1;
+        else if(i==0)                     //0的阶乘=1
+            return 1;
+        else                           //0继续递归
+            return i*recursion(i-1);
+    }
 
 
     public static void main(String[] args){
-        StringBuffer sf = new StringBuffer("We Are Happy");
-        System.out.println(replaceSpace(sf));
+
+        String s = "asdd";
+        System.out.println(recursion(9));
+
+
     }
 }

@@ -2,11 +2,9 @@ package wha.basic;
 
 import edu.princeton.cs.algs4.In;
 import org.junit.Test;
+import wha.sort.SortApp;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * Created by wwha on 16-12-13.
@@ -56,6 +54,17 @@ public class ArrayApp {
         return array;
     }
 
+    @Test
+    public void reOrderArrayTest(){
+        int[] arr = {1,3,2,6,3,4,2,7,8,3,7,12,5,3};
+        reOrderArray(arr);
+        for(int i=0; i<arr.length;i++){
+            System.out.print(arr[i] + ",");
+        }
+    }
+
+
+
     /**
      * 输入一个矩阵，按照从外向里以顺时针的顺序依次打印出每一个数字
      */
@@ -88,6 +97,24 @@ public class ArrayApp {
         return list;
     }
 
+    @Test
+    public void printMatrix(){
+        int[][] m = {
+                {1,2,3,4,5},
+                {6,7,8,9,10},
+                {11,12,13,14,15},
+                {16,17,18,19,20},
+                {21,22,23,24,25}
+        };
+        int[][] m1 = {{1,2,3,4,5}};
+        int[][] m2 = {
+                {1},{2},{3},{4},{5}
+        };
+        for(Integer i: printMatrix(m2)){
+            System.out.print(i + ",");
+        }
+    }
+
     /**
      * 打印一个集合的所有子集
      * key：长度为n的集合的子集数为2^n，
@@ -117,33 +144,73 @@ public class ArrayApp {
         printSubCollections(s);
     }
 
-    @Test
-    public void printMatrix(){
-        int[][] m = {
-                {1,2,3,4,5},
-                {6,7,8,9,10},
-                {11,12,13,14,15},
-                {16,17,18,19,20},
-                {21,22,23,24,25}
-        };
-        int[][] m1 = {{1,2,3,4,5}};
-        int[][] m2 = {
-                {1},{2},{3},{4},{5}
-        };
-        for(Integer i: printMatrix(m2)){
-            System.out.print(i + ",");
+
+    public int moreThanHalfNum_Solution(int [] array) {
+        if(array==null || array.length==0) throw new RuntimeException("输入错误！");
+        Map<Integer,Integer> map = new HashMap<>();
+        int count = 0;
+        int target = 0;
+        for(int i=0; i<array.length; i++){
+            if(map.containsKey(array[i])){
+                map.put(array[i],map.get(array[i])+1);
+                if(count < map.get(array[i])){
+                    target = array[i];
+                    count = map.get(array[i]);
+                }
+            }else{
+                map.put(array[i],1);
+            }
+        }
+        if(count > array.length/2){
+            return target;
+        }else{
+            return 0;
         }
     }
 
-
     @Test
-    public void reOrderArrayTest(){
-        int[] arr = {1,3,2,6,3,4,2,7,8,3,7,12,5,3};
-        reOrderArray(arr);
-        for(int i=0; i<arr.length;i++){
-            System.out.print(arr[i] + ",");
-        }
+    public void moreThanHalfNum_SolutionTest(){
+        int[] arr = {1,2,3,2,2,2,5,4,2};
+        int[] a = {1,2,5,7,8,2,12,4};
+        System.out.println(moreThanHalfNum_Solution(arr));
     }
+
+
+    /**
+     *输入n个整数，找出其中最小的K个数。例如输入4,5,1,6,2,7,3,8这8个数字，
+     * 则最小的4个数字是1,2,3,4,。
+     */
+    public ArrayList<Integer> GetLeastNumbers(int [] input, int k) {
+        ArrayList<Integer> list =  new ArrayList<>();
+        if(input.length ==0 || k<1 || k>input.length){
+            return list;
+        }
+        int temp ;
+        for(int i = 0;i<k;i++){
+            for(int j=input.length-1; j>i;j--){
+                if(input[j]<input[j-1]){
+                    temp = input[j];
+                    input[j] = input[j-1];
+                    input[j-1] = temp;
+                }
+            }
+            list.add(input[i]);
+        }
+
+        return list;
+    }
+
+    /**
+     * 查找数组里连续元素的最大值。如{6,-3,-2,7,-15,1,2,2},
+     * 连续子向量的最大和为8(从第0个开始,到第3个为止)。(子向量的长度至少是1)
+     */
+    public int findGreatestSumOfSubArray(int[] array) {
+
+
+        return 0;
+    }
+
+
 
 
 }
