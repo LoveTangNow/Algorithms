@@ -205,9 +205,32 @@ public class ArrayApp {
      * 连续子向量的最大和为8(从第0个开始,到第3个为止)。(子向量的长度至少是1)
      */
     public int findGreatestSumOfSubArray(int[] array) {
+        //每一段连续元素的最大值，都是以正数开始（前面是非正数），
+        if(array.length == 0)   return 0;
+        int tmpSum = array[0],sum = array[0];
+        for(int i=1; i<array.length; i++){
+            tmpSum = tmpSum<0 ? array[i] : tmpSum+array[i];
+            sum = sum>tmpSum ? sum :tmpSum;
+        }
 
+        return sum;
+    }
 
-        return 0;
+    /**
+     *1~n区间所有的数中，1出现的次数
+     */
+    public int numberOf1Between1AndN(int n) {
+        String s = "",m;
+        char c = '1';
+        int count = 0;
+        for(int i=1;i<=n;i++){
+            m = s+i;
+            for(int j=0;j<m.length();j++){
+                if(m.charAt(j) == c)    count++;
+            }
+        }
+
+        return count;
     }
 
 
