@@ -144,8 +144,10 @@ public class ArrayApp {
         printSubCollections(s);
     }
 
-
-    public int moreThanHalfNum_Solution(int [] array) {
+    /**
+     * 一个数组中，如果有元素的个数大于数组长度的一半，则返回这个个数，否则返回0
+     */
+    public int moreThanHalfNum(int [] array) {
         if(array==null || array.length==0) throw new RuntimeException("输入错误！");
         Map<Integer,Integer> map = new HashMap<>();
         int count = 0;
@@ -169,10 +171,10 @@ public class ArrayApp {
     }
 
     @Test
-    public void moreThanHalfNum_SolutionTest(){
+    public void moreThanHalfNumTest(){
         int[] arr = {1,2,3,2,2,2,5,4,2};
         int[] a = {1,2,5,7,8,2,12,4};
-        System.out.println(moreThanHalfNum_Solution(arr));
+        System.out.println(moreThanHalfNum(arr));
     }
 
 
@@ -240,5 +242,37 @@ public class ArrayApp {
         return ones;
     }
 
+
+    /**
+     * 输入一个正整数数组，把数组里所有数字拼接起来排成一个数，打印能拼接出的所有数字中最小的一个。
+     * 例如输入数组{3，32，321}，则打印出这三个数字能排成的最小数字为321323
+     * key:定义规则,
+     * 若ab>ba,则a"大于"b
+     * 若ab<ba,则a"小于"b
+     * 若ab=ba,则a"等于"b
+     */
+    public String printMinNumber(int [] numbers) {
+        if(numbers==null || numbers.length==0)  return "";
+
+        StringBuilder number = new StringBuilder();
+        ArrayList<Integer> list = new ArrayList<>();
+        for (int i=0; i<numbers.length;i++){
+            list.add(numbers[i]);
+        }
+
+        Collections.sort(list, new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                String s1 = o1 + "" + o2;
+                String s2 = o2 + "" + o1;
+                return s1.compareTo(s2);//
+            }
+        });
+
+        for (int i: list){
+            number.append(i);
+        }
+        return number.toString();
+    }
 
 }
