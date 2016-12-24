@@ -1,5 +1,7 @@
 package wha.sort;
 
+import org.junit.Test;
+
 /**
  * Created by wwha on 16-11-7.
  */
@@ -41,6 +43,7 @@ public class SortApp {
     }
 
     /**
+     * 选择排序
      *首先在未排序序列中找到最小（大）元素，存放到排序序列的起始位置，然后，再从剩余未排序元素中继续寻找最小（大）元素，
      * 然后放到已排序序列的末尾。以此类推，直到所有元素均排序完毕。
      */
@@ -89,6 +92,49 @@ public class SortApp {
 
     }
 
+    /**
+     * 归并排序 递归版
+     *
+     */
+    public static void mergeSort(int[] arr){
+        int len = arr.length;
+        int[] result = new int[len];
+        mergeSortRecursive(arr,result,0,len-1);
+
+    }
+
+    private static void mergeSortRecursive(int[] arr, int[] result, int start, int end) {
+        if(start >= end)    return;
+        int len = end -start,mid = start + (len>>1);
+        int start1 = start,end1 = mid;
+        int start2 = mid+1,end2 = end;
+        mergeSortRecursive(arr, result, start1, end1);
+        mergeSortRecursive(arr, result, start2, end2);
+        int k=start;
+        while (start1<=end1 && start2<=end2){
+            result[k++] = arr[start1]<arr[start2] ? arr[start1++] : arr[start2++];
+        }
+
+        while (start1 <=end1) {
+            result[k++] = arr[start1++];
+        }
+
+        while (start2 <= end2) {
+            result[k++] = arr[start2++];
+        }
+
+        for(k=start; k<=end; k++){
+            arr[k] = result[k];
+        }
+
+    }
+
+    @Test
+    public void mergeSortTest(){
+        int[] arr = {1,23,5,67,3,2,8,34,12,45,62,12,31,61,38,49,23,234,56,29,24,45,4,1,24};
+        mergeSort(arr);
+        print(arr);
+    }
 
 
     public static void print(int[] a){

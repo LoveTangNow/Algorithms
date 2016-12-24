@@ -61,15 +61,28 @@ public class StringApp {
     }
 
     /**
-     *
+     *在一个字符串(1<=字符串长度<=10000，全部由大写字母组成)中找到第一个只出现一次的字符,并返回它的位置
+     * key:用字符串中的每一个字符的ASCII码作为数组的索引,记录该字符出现的次数
      */
     public int firstNotRepeatingChar(String str) {
-     return 0;
+        if(str == null || str.length()==0)  return -1;
+        int[] arr = new int['z'+1];
+        for(int i=0; i<str.length(); i++){
+            arr[str.charAt(i)]++;
+        }
+
+        for(int i=0; i<str.length(); i++){
+            if(arr[str.charAt(i)]==1){
+                return i;
+            }
+        }
+
+        return -1;
 
     }
 
     @Test
     public void firstNotRepeatingCharTest() {
-        System.out.println(firstNotRepeatingChar("akjsdfaksefhaldsnfvasef"));
+        System.out.println(firstNotRepeatingChar("akkjfalsdfjkldfasdkjlfjkhdfjhgasdfhacbcasdbhjasbdjhfabjsdfaskdfasijsdfaksefhaldsnfvasef"));
     }
 }

@@ -1,8 +1,6 @@
 package wha.stack;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * Created by wwha on 16-12-13.
@@ -112,5 +110,48 @@ public class LiskedListApp {
         head.random = Clone(pHead.random);
 
         return head;
+    }
+
+    /**
+     * 输入两个链表，找出它们的第一个公共结点。
+     */
+    public ListNode findFirstCommonNode(ListNode pHead1, ListNode pHead2) {
+        if(pHead1==null || pHead2==null)	return null;
+        Map<ListNode,String> map = new HashMap<>();
+        ListNode  temp = pHead1;
+        while(temp != null){
+            map.put(temp,null);
+            temp = temp.next;
+        }
+        temp = pHead2;
+        while (temp != null){
+            if(map.containsKey(temp)){
+                return temp;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     *要是能长度一样就好办了,同步查找next
+     * key:两个链表相加
+     */
+    public ListNode findFirstCommonNodeII(ListNode pHead1, ListNode pHead2) {
+        ListNode p1 = pHead1;
+        ListNode p2 = pHead2;
+        int loop =0;// 等于2时说明已经相加循环了一遍,没有公共点,返回null
+        while (p1 != p2){
+            if(p1==null){
+                p1 = pHead2;
+                loop++;
+            }else p1 = p1.next;
+            if(loop>1){
+                return null;
+            }
+            p2 = (p2==null ? pHead1 : p2.next);
+        }
+
+        return p1;
     }
 }

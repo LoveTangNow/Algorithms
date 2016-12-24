@@ -1,7 +1,6 @@
 package wha.tree;
 
 
-
 import java.util.*;
 
 /**
@@ -37,19 +36,6 @@ public class BinaryTree {
         return vals;
     }
 
-    /**
-     * 获取二叉树的深度
-     * KEY: 递归
-     */
-    public static int getTreeDepth(TreeNode root) {
-        int dep1, dep2;
-        if (root == null) {
-            return 0;
-        }
-        dep1 = getTreeDepth(root.left);
-        dep2 = getTreeDepth(root.right);
-        return dep1 >= dep2 ? dep1 + 1 : dep2 + 1;
-    }
 
 
     /**
@@ -145,16 +131,17 @@ public class BinaryTree {
 
     ArrayList<ArrayList<Integer>> list = new ArrayList<ArrayList<Integer>>();
     ArrayList<Integer> li = new ArrayList<Integer>();
+
     public ArrayList<ArrayList<Integer>> findPath(TreeNode root, int target) {
-        if(root == null)    return list;
+        if (root == null) return list;
         li.add(root.val);
         target -= root.val;//每经过一层的节点，减去节点的值，到达叶子节点时，看是不是减为0；
-        if(target == 0 && root.left == null && root.right == null){
+        if (target == 0 && root.left == null && root.right == null) {
             list.add(new ArrayList<>(li));
         }
         findPath(root.left, target);
         findPath(root.right, target);
-        li.remove(li.size() -1);// 每探索完一个节点,都在路径列表li中移除，不干扰下条路径的形成
+        li.remove(li.size() - 1);// 每探索完一个节点,都在路径列表li中移除，不干扰下条路径的形成
         return list;
     }
 
@@ -165,26 +152,26 @@ public class BinaryTree {
      * KEY: 中序遍历 非递归
      */
     public TreeNode Convert(TreeNode root) {
-        if(root == null)     return null;
+        if (root == null) return null;
         TreeNode curr = root;
         TreeNode pre = null;
         boolean isFirst = true;
         Stack<TreeNode> stack = new Stack<>();//存储中序遍历的节点
 
-        while (curr != null || !stack.isEmpty()){
-            while (curr != null){
+        while (curr != null || !stack.isEmpty()) {
+            while (curr != null) {
                 stack.push(curr);
                 curr = curr.left;
             }
 
             curr = stack.pop();
-            if(isFirst){//设置首节点
+            if (isFirst) {//设置首节点
                 root = curr;
                 pre = root;
                 isFirst = false;
-            }else {
+            } else {
                 pre.right = curr;
-                curr.left =pre;
+                curr.left = pre;
                 pre = curr;
             }
 
@@ -193,6 +180,45 @@ public class BinaryTree {
 
         return root;
     }
+    /**
+     * 获取二叉树的深度
+     * KEY: 递归
+     */
+    public static int getTreeDepth(TreeNode root) {
+        int dep1, dep2;
+        if (root == null) {
+            return 0;
+        }
+        dep1 = getTreeDepth(root.left);
+        dep2 = getTreeDepth(root.right);
+        return dep1 >= dep2 ? dep1 + 1 : dep2 + 1;
+    }
 
+    /**
+     * 平衡二叉树:它是一 棵空树或它的左右两个子树的高度差的绝对值不超过1，
+     * 并且左右两个子树都是一棵平衡二叉树
+     */
+    private boolean isBalanced = true;
+
+    public boolean isBalanced(TreeNode root) {
+        if(root == null) return true;
+
+        getTreeDepthTemp(root);
+        return isBalanced;
+
+    }
+    public int getTreeDepthTemp(TreeNode root) {
+        int dep1, dep2;
+        if (root == null) {
+            return 0;
+        }
+        dep1 = getTreeDepth(root.left);
+        dep2 = getTreeDepth(root.right);
+        if(Math.abs(dep1-dep2)>1){
+            isBalanced = false;
+        }
+
+        return dep1 >= dep2 ? dep1 + 1 : dep2 + 1;
+    }
 
 }

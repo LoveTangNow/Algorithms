@@ -275,4 +275,69 @@ public class ArrayApp {
         return number.toString();
     }
 
+    /**
+     * 在数组中的两个数字，如果前面一个数字大于后面的数字，则这两个数字组成一个逆序对。输入一个数组,
+     * 求出这个数组中的逆序对的总数P。并将P对1000000007取模的结果输出。 即输出P%1000000007
+     * 例子:1,2,3,4,5,6,7,0,输入7
+     */
+    private int count=0;
+    public int inversePairs(int [] array) {
+        int[] result = new int [array.length];
+        mergeSortRecursive(array,result, 0,array.length-1);
+        return count%1000000007;
+    }
+
+
+    private void mergeSortRecursive(int[] arr, int[] result, int start, int end) {
+        if(start >= end)    return;
+        int len = end -start,mid = start + (len>>1);
+        int start1 = start,end1 = mid;
+        int start2 = mid+1,end2 = end;
+        mergeSortRecursive(arr, result, start1, end1);
+        mergeSortRecursive(arr, result, start2, end2);
+        int k=start;
+        while (start1<=end1 && start2<=end2){
+            if(arr[start1] <= arr[start2]){
+                result[k++] = arr[start1++];
+            } else{
+                result[k++] = arr[start2++];
+                count += (end1- start1 + 1);
+                count = count%1000000007;
+            }
+        }
+
+        while (start1 <=end1) {
+            result[k++] = arr[start1++];
+        }
+
+        while (start2 <= end2) {
+            result[k++] = arr[start2++];
+        }
+
+        for(k=start; k<=end; k++){
+            arr[k] = result[k];
+        }
+    }
+
+    @Test
+    public void inversePairsTest(){
+        int[] arr ={1,2,3,4,5,6,7,0};
+        System.out.println(inversePairs(arr));
+    }
+
+    public int getNumberOfK(int [] array , int k) {
+        if(array.length==0 || k<array[0] || k>array[array.length-1]){
+            return 0;
+        }
+
+        int count = 0;
+        for(int i=0;i<array.length;i++){
+            if(array[i] == k){
+                count++;
+            }
+        }
+
+        return count;
+    }
+
 }
