@@ -3,6 +3,10 @@ package wha.basic;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by wwha on 16-12-12.
  */
@@ -142,4 +146,50 @@ public class MathApp {
         System.out.println(getUglyNumber(1200));
     }
 
+
+    /**
+     * 输入一个递增排序的数组和一个数字S，在数组中查找两个数，是的他们的和正好是S，
+     * 如果有多对数字的和等于S，输出两个数的乘积最小的
+     */
+    public ArrayList<Integer> findNumbersWithSum(int [] array,int sum) {
+        ArrayList<Integer> list = new ArrayList<>();
+        if(array.length < 2) return list;
+
+        Map<Integer,Integer> map = new HashMap<>();
+        for(int i=0; i<array.length;i++){
+            for(int j=i+1; j<array.length;j++){
+                if(array[i] + array[j] == sum){
+                    map.put(array[i],array[j]);
+                }else if(array[i] + array[j] > sum){
+                    break;
+                }
+            }
+        }
+
+        int min = Integer.MAX_VALUE,a=0,b=0;
+        boolean isExisted = false;
+        for(Map.Entry<Integer, Integer> en : map.entrySet()){
+            if(en.getKey() * en.getValue() <min){
+                min = en.getKey() * en.getValue();
+                a = en.getKey();
+                b= en.getValue();
+                isExisted = true;
+            }
+        }
+
+
+        if(isExisted){
+            list.add(a);
+            list.add(b);
+        }
+        return list;
+    }
+
+    /**
+     * 输出所有和为S的连续正数序列。序列内按照从小至大的顺序，序列间按照开始数字从小到大的顺序
+     */
+    public ArrayList<ArrayList<Integer>> findContinuousSequence(int sum) {
+
+        return null;
+    }
 }

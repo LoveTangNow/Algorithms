@@ -85,4 +85,45 @@ public class StringApp {
     public void firstNotRepeatingCharTest() {
         System.out.println(firstNotRepeatingChar("akkjfalsdfjkldfasdkjlfjkhdfjhgasdfhacbcasdbhjasbdjhfabjsdfaskdfasijsdfaksefhaldsnfvasef"));
     }
+
+    /**
+     *堆字符串进行左循环移位,
+     * 字符序列S=”abcXYZdef”,要求输出循环左移3位后的结果，即“XYZdefabc”。
+     */
+    public String leftRotateString(String str,int n) {
+        if(str ==  null || str.length()==0) return "";
+        int len = str.length();
+        n = n%len;
+        String left = str.substring(0,n);
+        return str.substring(n) + left;
+    }
+
+    @Test
+    public void leftRotateStringTest(){
+        String str = "abcXYZdef";
+        System.out.println(leftRotateString(str,3));
+    }
+
+    /**
+     * 反转句子
+     * @param str "student a am i"
+     * @return "i am s student"
+     */
+    public String reverseSentence(String str) {
+        if (str == null)    return "";
+        if(str.trim().equals(""))   return str;
+        String[] arr = str.split(" ");
+        StringBuilder sb = new StringBuilder();
+        for(int i = arr.length -1; i>=0;i--){
+            sb.append(arr[i] + " ");
+        }
+        str = sb.toString();
+        return str.substring(0,str.length()-1);
+    }
+
+    @Test
+    public void reverseSentenceTest(){
+        String  str = "student a am i";
+        System.out.println(reverseSentence(str));
+    }
 }
