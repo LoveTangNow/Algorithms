@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -187,9 +188,83 @@ public class MathApp {
 
     /**
      * 输出所有和为S的连续正数序列。序列内按照从小至大的顺序，序列间按照开始数字从小到大的顺序
+     * TODO
      */
     public ArrayList<ArrayList<Integer>> findContinuousSequence(int sum) {
 
         return null;
+    }
+
+    /**
+     * 判断5张牌是不是顺子 注意:一共4张大小王,可以当任意牌,数组中表示为0,A只表示1
+     * Key:没有重复值
+     *   max-min <5
+     */
+
+    public boolean isContinuous(int [] numbers) {
+        if(numbers.length != 5) return false;
+        int max = -1,min = 14;
+        int flag = 0,num,count0 = 0;
+        for(int i=0; i<numbers.length ;i++){
+            num = numbers[i];
+            if(num<0 || num >13)    return false;
+
+            if(num == 0){
+                if(++count0 <=4){
+                    continue;
+                }else return false;
+            }
+
+            if(((flag>>num) & 1) == 1)  return false;//判断是否有相同的数
+            flag |= (1<< num);
+            if(min > num) min = num;
+            if(max < num) max = num;
+            if((max - min) >=5) return false;
+        }
+
+        return true;
+
+    }
+
+    @Test
+    public void isContinuousTest(){
+        int[] a = {0,0,1,2,3};
+        int[] b = {0,4,1,2,3};
+        int[] c = {0,0,0,0,3};
+        int[] d = {0,0,0,0,0};
+        int[] e = {1,6,0,0,0};
+
+        System.out.println(isContinuous(e));
+    }
+
+
+    public int lastRemaining(int n, int m) {
+        if(n<1 || m<1)  return -1;
+
+        List<Integer> list = new ArrayList<>();
+
+        for(int i=0; i<n; i++){
+            list.add(i);
+        }
+        int k=0;
+        while(list.size()!=1){
+            k = ( k+(m-1)  ) % list.size();//k表示上次删除list中的元素索引
+            System.out.println(list.get(k));
+            list.remove(k);
+        }
+
+        return list.get(0);
+    }
+
+
+    @Test
+    public void lastRemainingTest(){
+        lastRemaining(11,7);
+    }
+
+    public int Sum_Solution(int n) {
+        int sum = n;
+        boolean b = (n >0) && ((sum += Sum_Solution(n-1))>0);
+        return sum;
     }
 }
