@@ -7,6 +7,7 @@ import java.util.*;
 /**
  * Created by wwha on 16-12-13.
  */
+
 public class StringApp {
 
     public static String replaceSpace(StringBuffer str) {
@@ -125,5 +126,53 @@ public class StringApp {
     public void reverseSentenceTest(){
         String  str = "student a am i";
         System.out.println(reverseSentence(str));
+    }
+
+    /**
+     * 将一个字符串转换成一个整数，要求不能使用字符串转换整数的库函数。
+     * 数值为0或者字符串不是一个合法的数值则返回0
+     */
+    public int strToInt(String str) {
+        if(str == null || str.trim().equals(""))   return 0;
+        int num = 0,pow = 1,i=0;
+        char c;
+        boolean isNagi = false;
+        try {
+            if(str.charAt(0) == '-'){
+                isNagi = true;
+                i=1;
+            }else if( str.charAt(0) == '+'){
+                i=1;
+            }
+
+            for (; i<str.length(); i++){
+                c = str.charAt(i);
+                if(c<48 || c >58) throw new Exception("error");
+                num = num * pow + (c-48);
+                pow = 10;
+
+            }
+        }catch (Exception e){
+            return 0;
+        }
+        if(isNagi) return -num;
+        return num;
+
+    }
+
+    @Test
+    public void strToIntTest(){
+        String s = "489123";
+        System.out.println(strToInt(s));
+    }
+
+    /**
+     * 请实现一个函数用来匹配包括'.'和'*'的正则表达式。模式中的字符'.'表示任意一个字符，而'*'表示它前面的字符可以出现任意次（包含0次）。 在本题中，匹配是指字符串的所有字符匹配整个模式。
+     * 例如，字符串"aaa"与模式"a.a"和"ab*ac*a"匹配，但是与"aa.a"和"ab*a"均不匹配
+     */
+    public boolean match(char[] str, char[] pattern) {
+        char star,point;
+
+        return false;
     }
 }
