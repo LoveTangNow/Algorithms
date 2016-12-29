@@ -221,4 +221,33 @@ public class BinaryTree {
         return dep1 >= dep2 ? dep1 + 1 : dep2 + 1;
     }
 
+    /**
+     *给定一个二叉树和其中的一个结点，请找出中序遍历顺序的下一个结点并且返回。
+     * 注意，树中的结点不仅包含左右子结点，同时包含指向父结点的指针。
+     * key:先找到根节点,再中序遍历找到目标节点,下一次循环弹栈的元素就是要求的值.
+     */
+    public TreeLinkNode getNext(TreeLinkNode pNode) {
+
+        TreeLinkNode p,curr = pNode;
+        Stack<TreeLinkNode> stack = new Stack<>();
+        boolean isGet = false;
+        while(curr.next != null){
+            curr = curr.next;
+        }
+
+        while(curr!=null || !stack.isEmpty()){
+            while(curr != null){
+                stack.push(curr);
+                curr = curr.left;
+            }
+
+            p = stack.pop();
+            if(isGet)   return p;
+            if(p == pNode){
+                isGet = true;
+            }
+            curr = p.right;
+        }
+        return null;
+    }
 }

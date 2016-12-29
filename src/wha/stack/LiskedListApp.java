@@ -189,23 +189,23 @@ public class LiskedListApp {
      */
     public ListNode deleteDuplication(ListNode pHead){
         if (pHead == null)  return null;
-        Stack<ListNode> stack = new Stack<>();
-        ListNode current = pHead,pre = current;
-        while (current != null){
-            current = current.next;
-            boolean isDup = false;
-            while (current != null && current.val==pre.val){
+        ListNode first = new ListNode(-1);
+        first.next = pHead;
+        ListNode current = pHead,pre = first;
+        while (current != null && current.next != null){
+            if(current.val == current.next.val){
+                int val = current.val;
+                while (current != null && current.val==val){
+                    current = current.next;
+                }
+                pre.next = current;
+            }else {
+                pre.next = current;
                 current = current.next;
-                isDup = true;
             }
-            if(!isDup){
-                //stack.push(pre);
-            }
-            pre.next = current;
-            pre = current;
 
         }
-        return pHead;
+        return first.next;
     }
 
 }
