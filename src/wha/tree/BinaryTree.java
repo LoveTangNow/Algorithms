@@ -274,8 +274,8 @@ public class BinaryTree {
     private boolean isSymmetricalProc(TreeNode left, TreeNode right) {
         if(left == null && right == null)   return true;
         if(left != null && right != null){
-            if(left.val == right.val && isSameTree(left.left,right.right) &&
-                    isSameTree(left.right,right.left)){
+            if(left.val == right.val && isSymmetricalProc(left.left,right.right) &&
+                    isSymmetricalProc(left.right,right.left)){
                 return true;
             }else return false;
         }
@@ -283,18 +283,7 @@ public class BinaryTree {
         return false;
     }
 
-    /**
-     * 交换左右子树
-     * @param root
-     */
-    private void exchangeTreeNode(TreeNode root) {
-        if(root == null)    return;
-        TreeNode left = root.left;
-        root.left = root.right;
-        root.right = left;
-        exchangeTreeNode(root.left);
-        exchangeTreeNode(root.right);
-    }
+
 
 
 }
