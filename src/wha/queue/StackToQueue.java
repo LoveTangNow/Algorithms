@@ -9,6 +9,7 @@ import java.util.Stack;
  * 出栈时：栈1的元素全部出栈，入栈到栈2，栈2再出栈
  * key： 必须满足栈2为空时，才能栈1先出栈到栈2，栈2再出栈
  */
+
 public class StackToQueue {
     Stack<Integer> stack1 = new Stack<Integer>();
     Stack<Integer> stack2 = new Stack<Integer>();

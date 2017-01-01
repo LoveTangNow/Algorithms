@@ -1,6 +1,8 @@
 package wha.tree;
 
 
+import org.junit.Test;
+
 import java.util.*;
 
 /**
@@ -284,6 +286,61 @@ public class BinaryTree {
     }
 
 
+    /**
+     * 请实现两个函数，分别用来序列化和反序列化二叉树.
+     * 这里的序列化指的是将一棵二叉树保存到文件中，反序列化就是从文件中读取二叉树结点值重构原来的二叉树。
+     */
+    String serializeBTree(TreeNode root) {//先序遍历
+        if(root == null )   return "";
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode node = root;
+        StringBuilder result = new StringBuilder();
+
+        while(node != null || !stack.isEmpty()){
+            while (node != null){
+                stack.push(node);
+                result.append(node.val + ",");
+                node = node.left;
+            }
+            result.append("#,");//左子树为空
+            node = stack.pop();
+            node = node.right;
+
+        }
+        result.append("#");
+        String res = result.toString();
+        return res;
+    }
+    TreeNode Deserialize(String str) {//1,2,4,#,#,5,#,#,3,6,7,#,#,8,#,#,#
+        if(str == null || str == "")    return null;
+
+        String[] nodes = str.split(",");
+        TreeNode root = new TreeNode(Integer.parseInt(nodes[0]));
+        TreeNode cnode;
+        String node;
+        for(int i=1; i< nodes.length; i++){
+            node = nodes[i];
+        }
+        return null;
+    }
 
 
+    @Test
+    public void serializeBTreeTest(){
+        TreeNode node = new TreeNode(1);
+        TreeNode node4 = new TreeNode(4);
+        TreeNode node5 = new TreeNode(5);
+        TreeNode node2 = new TreeNode(2);
+        node2.left = node4;node2.right = node5;
+        TreeNode node7 = new TreeNode(7);
+        TreeNode node8 = new TreeNode(8);
+        TreeNode node6 = new TreeNode(6);
+        node6.left = node7;node6.right = node8;
+        TreeNode node3 = new TreeNode(3);
+        node3.left = node6;
+
+        node.left =node2; node.right = node3;
+        System.out.println(serializeBTree(node));
+
+    }
 }
