@@ -343,4 +343,32 @@ public class BinaryTree {
         System.out.println(serializeBTree(node));
 
     }
+
+    /**
+     * 给定一颗二叉搜索树，请找出其中的第k大的结点。
+     * 例如， 5 / \ 3 7 /\ /\ 2 4 6 8 中，按结点数值大小顺序第三个结点的值为4
+     * key: 中序遍历
+     */
+    TreeNode kthNode(TreeNode pRoot, int k)  {
+        int count = 0;
+        if(count > k || pRoot == null)
+            return null;
+        TreeNode p = pRoot;
+        Stack<TreeNode> LDRStack = new Stack<TreeNode>();
+        TreeNode kthNode = null;
+        while(p != null || !LDRStack.isEmpty()){
+            while(p != null){
+                LDRStack.push(p);
+                p = p.left;
+            }
+            TreeNode node = LDRStack.pop();
+            count++;
+            if(count == k){
+                kthNode = node;
+                break;
+            }
+            p = node.right;
+        }
+        return kthNode;
+    }
 }
