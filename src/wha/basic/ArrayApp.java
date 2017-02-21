@@ -382,4 +382,26 @@ public class ArrayApp {
             else num2[0] ^= array[i];
         }
     }
+
+    /**
+     *
+     */
+    public ArrayList<Integer> maxInWindows(int [] num, int size)
+    {
+
+        ArrayList<Integer> list = new ArrayList<>();
+        if(size < 1)	return list;
+        int length = num.length - size + 1;
+        int max = Integer.MIN_VALUE;
+
+        for(int i=0; i<length;i++){
+            for(int j=0;j<size;j++){
+                int tem = num[i+j];
+                if(tem > max)   max = tem;
+            }
+            list.add(max);
+
+        }
+        return list;
+    }
 }
