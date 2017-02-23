@@ -328,7 +328,7 @@ public class MathApp {
 
     private boolean goAhead(char[] matrix, char[] str, int rows, int cols, int i, int j, int index, int[] flag) {
         int k = i * cols + j;
-        if (i < 0 || i >=rows || j < 0 || j >=cols) return false;
+        if (i < 0 || i >= rows || j < 0 || j >= cols) return false;
         if (matrix[k] != str[index] || flag[k] == 1) {
             return false;
         }
@@ -350,7 +350,49 @@ public class MathApp {
     public void hasPathTest() {
         String c = "abcesfcsadee";
         String s = "bcced";
-        boolean b= hasPath(c.toCharArray(), 3,4,s.toCharArray());
+        boolean b = hasPath(c.toCharArray(), 3, 4, s.toCharArray());
         System.out.println(b);
+    }
+
+    /**
+     地上有一个m行和n列的方格。一个机器人从坐标0,0的格子开始移动，每一次只能向左，右，上，下四个方向移动一格，
+     但是不能进入行坐标和列坐标的数位之和大于k的格子。 例如，当k为18时，机器人能够进入方格（35,37），
+     因为3+5+3+7 = 18。但是，它不能进入方格（35,38），因为3+5+3+8 = 19。请问该机器人能够达到多少个格子？
+     */
+    public int movingCount(int threshold, int rows, int cols) {
+        int[][] flag = new int[rows][cols];
+        int count = moving(threshold,rows,cols, 0, 0, flag);
+
+        return count;
+    }
+
+    private int moving(int threshold,int rows,int cols, int i, int j, int[][] flag) {
+        if(i<0 || i>=rows ||j<0 || j>=cols ||
+                getSumBySingle(i,j)>threshold || flag[i][j]==1)
+            return 0;
+        flag[i][j] = 1;
+        return 1+ moving(threshold,rows,cols,i-1,j,flag)
+                + moving(threshold,rows,cols,i+1,j,flag)
+                + moving(threshold,rows,cols,i,j-1,flag)
+                + moving(threshold,rows,cols,i,j+1,flag);
+    }
+
+    private int getSumBySingle(int i, int j) {
+        int sum = 0;
+        while(i!=0){
+            sum += i%10;
+            i = i/10;
+        }
+        while(j!=0){
+            sum += j%10;
+            j = j/10;
+        }
+        return sum;
+    }
+
+    @Test
+    public void movingCountTest(){
+        int i=23,j=47;
+        System.out.println(getSumBySingle(i,j));
     }
 }
