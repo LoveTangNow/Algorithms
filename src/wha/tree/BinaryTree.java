@@ -308,20 +308,21 @@ public class BinaryTree {
 
         }
         result.append("#");
-        String res = result.toString();
-        return res;
+        return result.toString();
     }
+    int index = -1;
     TreeNode Deserialize(String str) {//1,2,4,#,#,5,#,#,3,6,7,#,#,8,#,#,#
         if(str == null || str == "")    return null;
-
+        index++;
         String[] nodes = str.split(",");
-        TreeNode root = new TreeNode(Integer.parseInt(nodes[0]));
-        TreeNode cnode;
-        String node;
-        for(int i=1; i< nodes.length; i++){
-            node = nodes[i];
+        TreeNode node = null;
+        if(!nodes[index].equals("#")){
+            node = new TreeNode(Integer.parseInt(nodes[index]));
+            node.left = Deserialize(str);
+            node.right = Deserialize(str);
         }
-        return null;
+
+        return node;
     }
 
 
@@ -339,8 +340,12 @@ public class BinaryTree {
         TreeNode node3 = new TreeNode(3);
         node3.left = node6;
 
-        node.left =node2; node.right = node3;
-        System.out.println(serializeBTree(node));
+        node.left =node2; //node.right = node3;
+
+        String s1 = serializeBTree(node);
+        System.out.println(s1);
+        TreeNode no = Deserialize(s1);
+        System.out.println(serializeBTree(no));
 
     }
 
