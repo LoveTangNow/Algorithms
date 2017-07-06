@@ -404,4 +404,43 @@ public class ArrayApp {
         }
         return list;
     }
+
+    /**
+     * 在一个N*N的数组中寻找所有横，竖，左上到右下，右上到左下，四种方向的直线连续D个数字的和里面最大的值
+     */
+
+    public static int findMax(int[][] arr, int d){
+        if(arr==null || arr.length==0 || arr.length != arr[0].length || d<1)
+            return 0;
+        if(d>arr.length) d = arr.length;
+        int len = arr.length;
+        int max = Integer.MIN_VALUE;
+        for(int i=0; i<len; i++) {//列
+            for (int j = 0; j < len; j++) {//行
+                //1.以j为第一参考，计算列中的连续d个数
+                int sum = 0, index = 0;
+                for (; (index < d) && (j + d - 1 < len); index++) {
+                    sum += arr[j + index][i];
+                }
+                if ((index == d) && max < sum) max = sum;
+
+                index = 0;
+                sum = 0;
+
+                //2.以j为第一参考，计算左上到右下的连续d个数
+                for (; (index < d) && (i + d - 1 < len) && (j + d - 1 < len); index++) {
+                    sum += arr[j + index][i + index];
+                }
+                if ((index == d) && max < sum) max = sum;
+            }
+        }
+        System.out.println(max);
+        return max;
+    }
+
+    public static void main(String[] args)
+    {
+        System.out.println(010);
+    }
+
 }

@@ -1,5 +1,6 @@
 package wha.basic;
 
+import com.sun.deploy.util.StringUtils;
 import org.junit.Test;
 
 import java.util.*;
@@ -175,4 +176,89 @@ public class StringApp {
 
         return false;
     }
+
+    /**
+     *将字符串转化为整形，如"123" 转化为 123
+     * 注意一异常处理
+     */
+    public int parseStrToInt(String num){
+        /**
+         *
+         */
+        if(num==null || "".equalsIgnoreCase(num.trim())){
+            return 0;
+        }
+        int MAX = Integer.MAX_VALUE;//2147483647
+        int MIN = Integer.MIN_VALUE;
+        int signed = 1;
+        int i=0,n=0;
+        char c = num.charAt(0);
+        if(c == '-'|| c== '+'){
+            if(c=='-'){
+                signed = -1;
+            }
+            i++;
+        }
+
+        int len = num.length();
+        while (i<len&&isDigest(num.charAt(i))){
+            int s = num.charAt(i) - '0';
+            //溢出处理
+            if(signed>0 && (n>MAX/10) || n==MAX/10&&s>MAX%10){
+                n = MAX;
+                break;
+            }else if(signed<0 &&(n>MAX/10) || n==MAX/10&&s>MAX%10){
+                n = MIN;
+                break;
+            }
+            n = n*10 + s;
+            i++;
+        }
+
+        return signed>0?n:-n;
+
+    }
+     public boolean isDigest(char c){
+        return c>='0'&&c<='9';
+     }
+
+    @Test
+    public void parseStrToIntTest(){
+         String str = "-2147483649";
+        System.out.println(parseStrToInt(str));
+    }
+
+
+    /**
+     * 将字符串转化为数字+字幕
+     * AAAABCCD -》4A11B2C1D
+     */
+    public static String getCharAndNumber(String str){
+        if(str == null || str == "")	return "";
+        int len = str.length();
+        int i=0;
+        int count = 0;
+        StringBuilder sb = new StringBuilder("");
+        char c = str.charAt(0);
+        while(i<len){
+            char d = str.charAt(i);
+            if(c == d){
+                count++;
+            }else{
+                sb.append(count+""+c);
+                count = 1;
+            }
+            if(i==len-1){
+                sb.append(count+""+c);
+            }
+            c = d;
+            i++;
+        }
+        return sb.toString();
+    }
+
+    public static void main(String[] args) {
+
+    }
+
 }

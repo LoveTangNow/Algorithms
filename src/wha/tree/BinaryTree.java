@@ -415,4 +415,99 @@ public class BinaryTree {
             return minHeap.peek() * 1.0;
         }
     }
+
+
+    /**
+     * 返回git树上两点的最近分割点
+     * 多叉树的两节点的最近共同父辈节点
+     * @param matrix 接邻矩阵，表示git树，matrix[i][j] == '1' 当且仅当git树中第i个和第j个节点有连接，节点0为git树的跟节点
+     * @param indexA 节点A的index
+     * @param indexB 节点B的index
+     */
+    public int getSplitNode(String[] matrix, int indexA, int indexB) {
+        //求出两节点的深度，减去深度差之后，比较父节点是否相同
+        Queue<Integer> q1 = new LinkedList<>();
+        Queue<Integer> q2 = new LinkedList<>();
+        //HashMap
+        int dep1 = getTreeDepth(q1,matrix,indexA);
+        int dep2 = getTreeDepth(q2,matrix,indexB);
+        System.out.println(dep1 +":"+dep2);
+        if(dep1>dep2){
+            int num = dep1-dep2;
+            while (num-->0){
+                q1.poll();
+            }
+        }else if(dep1<dep2){
+            int num = dep2-dep1;
+            while (num-->0){
+                q2.poll();
+            }
+        }
+
+        while (!q1.isEmpty()){
+            int k = q1.poll();
+            if(k==q2.poll())    return k;
+        }
+
+        return 1;
+    }
+
+    private int getTreeDepth(Queue<Integer> q, String[] matrix, int index) {
+        int count = 0,row=index-1;
+        int i=row;
+        while(row>0){
+            while (i>=0){
+                if(matrix[row].charAt(i) == '1'){
+                    q.offer(i+1);
+                    count++;
+                    break;
+                }
+                i--;
+            }
+            row = i;
+        }
+        return count;
+
+    }
+
+    @Test
+    public void getSplitNodeTest(){
+        String[] matrix = "01011,10100,01000,10000,10000".split(",");
+        String[] matrix1 = "01011000,10100000,01000000,10000000,10000000,00001001,00001000,00000100".split(",");
+        //System.out.println(getSplitNode(matrix1,7,8));
+
+    }
+
+
+    /**
+     * 寻找二叉树的最短深度
+     * 思路：广度遍历
+     */
+    public int getMinDepth(TreeNode tree){
+        if(tree == null) return 0;
+        int dep = 1;
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(tree);
+        int count = 1;
+        int k=0;
+        while(!q.isEmpty()){
+            TreeNode node = q.poll();
+            TreeNode left = node.left;
+            TreeNode right = node.right;
+            if(left==null && right==null){
+                return dep;
+            }else if(left==null || right == null){
+                return  dep+1;
+            }
+            q.add(left);count++;
+            q.add(right);count++;
+            while ((int)Math.pow(2,k) <=count+1){
+                if(count +1 ==(int)Math.pow(2,k)){
+                    dep++;
+                }
+                k++;
+            }
+        }
+        return dep;
+    }
 }
